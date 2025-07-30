@@ -1,26 +1,22 @@
 // frontend/pages/index.tsx
-// this page renders the main landing page of the SAAS template.
-// it is not a complex dashboard or production ready code.
+// Phone Anxiety Practice App - Main Interface
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { Activity } from 'lucide-react';
+import { Activity, Phone } from 'lucide-react';
+import Link from 'next/link';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
+export default function Home() {
+  const [message, setMessage] = useState('Loading...');
 
-export default function HomePage() {
-  const [message, setMessage] = useState('');
-
-  // fetch a welcome message from Supabase on load
   useEffect(() => {
-    async function loadMessage() {
-      const { data } = await supabase.from('messages').select('text').limit(1).single();
-      setMessage(data?.text || 'Hello World');
-    }
-
-    loadMessage();
+    fetch('http://localhost:8000/hello')
+      .then(response => response.json())
+      .then(data => setMessage(data.message))
+      .catch(error => {
+        console.error('Error:', error);
+        setMessage('Could not connect to backend');
+      });
   }, []);
 
   return (
@@ -29,6 +25,27 @@ export default function HomePage() {
         <Activity style={{ verticalAlign: 'middle' }} /> AI SAAS Template
       </h1>
       <p>{message}</p>
+      
+      <div style={{ marginTop: '3rem' }}>
+        <h2>Available Apps</h2>
+        <Link href="/phone-anxiety">
+          <a style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '1rem 2rem',
+            background: '#667eea',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '8px',
+            fontWeight: '600',
+            marginTop: '1rem'
+          }}>
+            <Phone size={20} />
+            Phone Anxiety Support App
+          </a>
+        </Link>
+      </div>
     </main>
   );
 }
