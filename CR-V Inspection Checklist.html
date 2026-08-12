@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!-- saved from url=(0243)file:///Users/ryankumpula/Library/Application%20Support/Claude/local-agent-mode-sessions/456bb626-21f6-4cbd-bfcc-816b5037d4e7/3b085822-ce97-45a9-8c4f-f05fe7900ca1/local_89211b9d-2dcb-48ea-b1cb-7c20159aa3a3/outputs/crv-inspection-checklist.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CR-V Inspection Checklist</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --ink: #1a1d21;
+    --muted: #6b7280;
+    --accent: #0b6e4f;
+    --accent-light: #e6f4ef;
+    --danger: #b91c1c;
+    --danger-light: #fdecec;
+    --border: #e5e7eb;
+    --done: #9ca3af;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.45;
+    padding-bottom: 90px;
+  }
+  header {
+    background: #14532d;
+    color: #fff;
+    padding: 18px 16px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  header h1 { margin: 0; font-size: 18px; font-weight: 700; }
+  header .sub { font-size: 12.5px; opacity: .85; margin-top: 3px; }
+  .progress-wrap { margin-top: 10px; background: rgba(255,255,255,.2); border-radius: 99px; height: 10px; overflow: hidden; }
+  .progress-bar { height: 100%; width: 0%; background: #4ade80; border-radius: 99px; transition: width .25s ease; }
+  .progress-label { font-size: 12px; margin-top: 5px; opacity: .9; }
+
+  .container { padding: 12px; max-width: 640px; margin: 0 auto; }
+
+  .phase {
+    background: var(--card);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 14px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    gap: 10px;
+  }
+  .phase-header:active { background: #f9fafb; }
+  .phase-title { font-weight: 700; font-size: 15px; flex: 1; }
+  .phase-note { font-size: 12px; color: var(--muted); font-weight: 400; display: block; margin-top: 2px; }
+  .badge {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 99px;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+  .badge.complete { background: var(--accent-light); color: var(--accent); }
+  .chev { transition: transform .2s ease; color: var(--muted); font-size: 13px; }
+  .phase.open .chev { transform: rotate(90deg); }
+  .items { display: none; border-top: 1px solid var(--border); }
+  .phase.open .items { display: block; }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:active { background: #f9fafb; }
+  .item.dealbreaker { border-left: 4px solid var(--danger); background: var(--danger-light); }
+  .item.dealbreaker:active { background: #fbdcdc; }
+  .cb {
+    flex: 0 0 26px;
+    width: 26px; height: 26px;
+    border: 2.5px solid #b9bfc9;
+    border-radius: 8px;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+    transition: all .15s ease;
+  }
+  .item.dealbreaker .cb { border-color: var(--danger); }
+  .item.checked .cb { background: var(--accent); border-color: var(--accent); }
+  .item.checked .cb::after { content: "✓"; color: #fff; font-weight: 800; font-size: 16px; }
+  .item-text { flex: 1; }
+  .item-title { font-weight: 650; font-size: 14.5px; }
+  .item-title .flag { color: var(--danger); font-weight: 800; }
+  .item-how { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .item.checked .item-title, .item.checked .item-how { color: var(--done); text-decoration: line-through; }
+  .item.checked.dealbreaker { background: #f6f7f8; border-left-color: #d1d5db; }
+
+  .walkaway {
+    background: #7f1d1d;
+    color: #fff;
+    border-radius: 14px;
+    padding: 16px 14px;
+    margin-bottom: 12px;
+  }
+  .walkaway h2 { margin: 0 0 8px; font-size: 15px; }
+  .walkaway ol { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .walkaway li { margin-bottom: 5px; }
+
+  .keyinfo {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+  }
+  .keyinfo b { display: block; margin-bottom: 4px; font-size: 14px; }
+
+  .footer-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+  .footer-stat { font-size: 13.5px; font-weight: 700; color: var(--accent); }
+  .btn-reset {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .btn-reset:active { background: var(--bg); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>2014 CR-V EX-L AWD — Inspection</h1>
+  <div class="sub">VIN-verified 2014 ✓ · Clean Carfax · 140,784 mi · Ask $10,980</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width: 3%;"></div></div>
+  <div class="progress-label" id="progressLabel">1 of 36 checked</div>
+</header>
+
+<div class="container">
+
+  <div class="keyinfo" style="background:#ecfdf5;border-color:#6ee7b7;">
+    <b>✓ Carfax verified</b>
+    VIN 5J6RM4H70<b style="display:inline">E</b>L070263 → 10th digit E = true 2014 → 5-speed auto → <b style="display:inline">flat-towable confirmed</b>.<br>
+    No accidents reported · 2 owners (personal use) · 25 service records · 140,784 mi matches listing — no rollback flag.<br>
+    Recalls: <b style="display:inline">0 open</b> (NHTSA 8/11/26, Honda 8/5/26 — fuel pump recall closed).<br>
+    <span style="color:#92400e;">Caveat: "no accidents reported" ≠ no accidents. Keep the respray check.</span>
+  </div>
+
+  <div id="phases"><div class="phase open" id="phase-0"><div class="phase-header"><div class="phase-title">1 · Before You Go<span class="phase-note">Carfax + recalls done ✓ — these remain</span></div><span class="badge" id="badge-0">1/4</span><span class="chev">▶</span></div><div class="items"><div class="item checked"><div class="cb"></div><div class="item-text"><div class="item-title">Recalls verified clean ✓</div><div class="item-how">0 open recalls on this VIN — NHTSA refreshed 8/11/26, Honda 8/5/26. Fuel pump recall closed. Screenshot filed with vehicle records.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Read the 25 service records</div><div class="item-how">In the Carfax detail: look for rear diff fluid service, transmission fluid (Honda DW-1), and AC work. A record gap over the last 10–20k = car that's been sitting at auction/lot.</div></div></div><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Verify dealer license + sourcing</div><div class="item-how">Small dealership: confirm ADOT dealer license (posted at lot, or ask for the number). Ask how they sourced the car — auction vs trade-in — and why. Get the 3-month warranty terms in writing.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Ask for the struts receipt</div><div class="item-how">“Brand new struts” — who installed them, when, what brand. No receipt = treat claim as unverified.</div></div></div></div></div><div class="phase" id="phase-1"><div class="phase-header"><div class="phase-title">2 · Cold Start<span class="phase-note">Tell seller NOT to start it before you arrive</span></div><span class="badge" id="badge-1">0/4</span><span class="chev">▶</span></div><div class="items"><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Touch the hood FIRST</div><div class="item-how">Warm hood = pre-warmed to hide problems. Reschedule or walk.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Listen to first start</div><div class="item-how">1–2 sec grind/rattle at startup = VTC actuator ($600–1,000). Only shows on a true cold start.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Watch the exhaust</div><div class="item-how">Blue smoke = burning oil. Persistent white smoke = head gasket.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Idle settles smooth</div><div class="item-how">Should be steady within 30 seconds.</div></div></div></div></div><div class="phase" id="phase-2"><div class="phase-header"><div class="phase-title">3 · Engine Bay<span class="phase-note">Engine off first, then idling</span></div><span class="badge" id="badge-2">0/5</span><span class="chev">▶</span></div><div class="items"><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Oil dipstick + under filler cap</div><div class="item-how">Milky = coolant intrusion (walk). Sludge under cap = neglect — also kills VTC actuators.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Look for leaks</div><div class="item-how">Valve cover gasket edges, oil pan, front of engine.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Coolant level &amp; color</div><div class="item-how">Green/blue, full. Rusty or oily = trouble. AZ heat stresses cooling.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">ATF dipstick</div><div class="item-how">Red/pink = good. Dark brown = OK. Black or burnt smell = walk or big cut.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Battery date code</div><div class="item-how">AZ kills batteries in ~3 yrs. Toad duty on ACC needs a strong battery.</div></div></div></div></div><div class="phase" id="phase-3"><div class="phase-header"><div class="phase-title">4 · AC Test<span class="phase-note">Arizona-critical — common CR-V failure</span></div><span class="badge" id="badge-3">0/2</span><span class="chev">▶</span></div><div class="items"><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Max AC at idle, parked</div><div class="item-how">Must blow COLD within ~2 min at idle, not just moving. Weak at idle = dying compressor ($1,000+).</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Listen at compressor</div><div class="item-how">Hood up: rapid clicking/cycling or rattle = clutch on the way out.</div></div></div></div></div><div class="phase" id="phase-4"><div class="phase-header"><div class="phase-title">5 · AWD Rear Diff<span class="phase-note">THE AWD test</span></div><span class="badge" id="badge-4">0/1</span><span class="chev">▶</span></div><div class="items"><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Tight-circle test</div><div class="item-how">Empty lot, full steering lock, slow circles BOTH directions. Judder, hop, or moan from rear = bad diff fluid at best, worn diff at worst.</div></div></div></div></div><div class="phase" id="phase-5"><div class="phase-header"><div class="phase-title">6 · Test Drive<span class="phase-note">20+ minutes, include highway</span></div><span class="badge" id="badge-5">0/7</span><span class="chev">▶</span></div><div class="items"><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Feel discrete gear shifts</div><div class="item-how">Clear 1-2, 2-3 shifts = 5AT = flat-towable. Continuous droning rev = CVT = 2015+ = WALK.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Shift quality</div><div class="item-how">No rev flare between gears, no slip, no harsh 2-3, prompt downshifts.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Steering at 65 mph</div><div class="item-how">Hands light on wheel — pull/wander was a known complaint. Alignment ($100) or crash damage (walk).</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Brake test 60→10</div><div class="item-how">Pulsation = warped rotors. Pull to one side = caliper.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Wheel bearings</div><div class="item-how">Speed-dependent hum that changes with gentle swerves.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Engine mounts</div><div class="item-how">Shudder/clunk on throttle tip-in and shifting to reverse — common at 140k.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Verify “new struts”</div><div class="item-how">Controlled ride, no clunks. Clean strut bodies in wheel wells. Ask for receipt.</div></div></div></div></div><div class="phase" id="phase-6"><div class="phase-header"><div class="phase-title">7 · Body · Interior · Tires</div><span class="badge" id="badge-6">0/5</span><span class="chev">▶</span></div><div class="items"><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Respray check</div><div class="item-how">Overspray in jambs/hood edges, tape lines, uneven panel gaps = accident repair. Sight down white panels in sun.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">AZ sun damage</div><div class="item-how">Clear coat peel on roof/hood/tailgate, dash cracks, headliner sag.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Tires: date + wear</div><div class="item-how">DOT date &gt;5–6 yrs = replace regardless of tread. All 4 matching. Inner-edge wear = alignment issue. Verify “almost new.”</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">VIN plates match</div><div class="item-how">Dash, driver door jamb, and title all agree: 5J6RM4H70EL070263.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Electronics sweep</div><div class="item-how">Every window, door lock (actuators fail on these), sunroof, seat heaters, camera, nav.</div></div></div></div></div><div class="phase" id="phase-7"><div class="phase-header"><div class="phase-title">8 · Flat-Tow Specific<span class="phase-note">The reason you're buying it</span></div><span class="badge" id="badge-7">0/4</span><span class="chev">▶</span></div><div class="items"><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Ignition ACC position</div><div class="item-how">Key lives in ACC while towing — must turn smoothly, no worn lock cylinder.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Shifter cycles freely</div><div class="item-how">Brake pressed: P→D→N without binding — the tow procedure requires this every hookup.</div></div></div><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Behind front bumper / frame rails</div><div class="item-how">Clean metal (good, baseplate installs ~$500+labor) OR existing Blue Ox/Roadmaster baseplate (verify solid). Front collision repair here = problem.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Parking brake releases fully</div><div class="item-how">A dragging park brake destroys rear brakes while towing.</div></div></div></div></div><div class="phase" id="phase-8"><div class="phase-header"><div class="phase-title">9 · Paperwork &amp; Close</div><span class="badge" id="badge-8">0/4</span><span class="chev">▶</span></div><div class="items"><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Title in hand, no lien</div><div class="item-how">Dealer must have title ready to transfer (or lien-release). No “we'll mail it.”</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">“3-month warranty” in writing</div><div class="item-how">Who backs it? 50/50 powertrain-only third-party warranties are near-worthless — price the car as if it doesn't exist.</div></div></div><div class="item dealbreaker"><div class="cb"></div><div class="item-text"><div class="item-title"><span class="flag">⛔ </span>Condition sale on PPI</div><div class="item-how">$150–200 at Honda dealer or indy shop, on a lift. Refusal tells you everything.</div></div></div><div class="item"><div class="cb"></div><div class="item-text"><div class="item-title">Negotiate out-the-door</div><div class="item-how">Clean Carfax removes the history discount — leverage is inspection findings + 140k service due (diff fluid, ATF, plugs, valve check ≈ $600–900). AZ doc fees are uncapped — negotiate the OTD number. Open at $9,500; clean pass = $10,000–10,500 fair.</div></div></div></div></div></div>
+
+  <div class="walkaway">
+    <h2>⛔ Walk-Away Triggers</h2>
+    <ol>
+      <li>Title issues: not present, liened without release, or name games</li>
+      <li>Pre-warmed engine / refused cold start</li>
+      <li>CVT behavior on test drive (it's a 2015+, not flat-towable)</li>
+      <li>Rear-end judder in tight circles</li>
+      <li>Weak AC at idle + seller won't budge on price</li>
+      <li>No ADOT dealer license / won't show it</li>
+      <li>Refused pre-purchase inspection</li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="footer-bar">
+  <span class="footer-stat" id="footerStat">3% complete</span>
+  <button class="btn-reset" onclick="resetAll()">Reset all</button>
+</div>
+
+<script>
+const DATA = [
+  { title: "1 · Before You Go", note: "Carfax + recalls done ✓ — these remain", items: [
+    { t: "Recalls verified clean ✓", h: "0 open recalls on this VIN — NHTSA refreshed 8/11/26, Honda 8/5/26. Fuel pump recall closed. Screenshot filed with vehicle records.", d: false },
+    { t: "Read the 25 service records", h: "In the Carfax detail: look for rear diff fluid service, transmission fluid (Honda DW-1), and AC work. A record gap over the last 10–20k = car that's been sitting at auction/lot.", d: false },
+    { t: "Verify dealer license + sourcing", h: "Small dealership: confirm ADOT dealer license (posted at lot, or ask for the number). Ask how they sourced the car — auction vs trade-in — and why. Get the 3-month warranty terms in writing.", d: true },
+    { t: "Ask for the struts receipt", h: "“Brand new struts” — who installed them, when, what brand. No receipt = treat claim as unverified.", d: false }
+  ]},
+  { title: "2 · Cold Start", note: "Tell seller NOT to start it before you arrive", items: [
+    { t: "Touch the hood FIRST", h: "Warm hood = pre-warmed to hide problems. Reschedule or walk.", d: true },
+    { t: "Listen to first start", h: "1–2 sec grind/rattle at startup = VTC actuator ($600–1,000). Only shows on a true cold start.", d: false },
+    { t: "Watch the exhaust", h: "Blue smoke = burning oil. Persistent white smoke = head gasket.", d: false },
+    { t: "Idle settles smooth", h: "Should be steady within 30 seconds.", d: false }
+  ]},
+  { title: "3 · Engine Bay", note: "Engine off first, then idling", items: [
+    { t: "Oil dipstick + under filler cap", h: "Milky = coolant intrusion (walk). Sludge under cap = neglect — also kills VTC actuators.", d: true },
+    { t: "Look for leaks", h: "Valve cover gasket edges, oil pan, front of engine.", d: false },
+    { t: "Coolant level & color", h: "Green/blue, full. Rusty or oily = trouble. AZ heat stresses cooling.", d: false },
+    { t: "ATF dipstick", h: "Red/pink = good. Dark brown = OK. Black or burnt smell = walk or big cut.", d: false },
+    { t: "Battery date code", h: "AZ kills batteries in ~3 yrs. Toad duty on ACC needs a strong battery.", d: false }
+  ]},
+  { title: "4 · AC Test", note: "Arizona-critical — common CR-V failure", items: [
+    { t: "Max AC at idle, parked", h: "Must blow COLD within ~2 min at idle, not just moving. Weak at idle = dying compressor ($1,000+).", d: true },
+    { t: "Listen at compressor", h: "Hood up: rapid clicking/cycling or rattle = clutch on the way out.", d: false }
+  ]},
+  { title: "5 · AWD Rear Diff", note: "THE AWD test", items: [
+    { t: "Tight-circle test", h: "Empty lot, full steering lock, slow circles BOTH directions. Judder, hop, or moan from rear = bad diff fluid at best, worn diff at worst.", d: true }
+  ]},
+  { title: "6 · Test Drive", note: "20+ minutes, include highway", items: [
+    { t: "Feel discrete gear shifts", h: "Clear 1-2, 2-3 shifts = 5AT = flat-towable. Continuous droning rev = CVT = 2015+ = WALK.", d: true },
+    { t: "Shift quality", h: "No rev flare between gears, no slip, no harsh 2-3, prompt downshifts.", d: false },
+    { t: "Steering at 65 mph", h: "Hands light on wheel — pull/wander was a known complaint. Alignment ($100) or crash damage (walk).", d: false },
+    { t: "Brake test 60→10", h: "Pulsation = warped rotors. Pull to one side = caliper.", d: false },
+    { t: "Wheel bearings", h: "Speed-dependent hum that changes with gentle swerves.", d: false },
+    { t: "Engine mounts", h: "Shudder/clunk on throttle tip-in and shifting to reverse — common at 140k.", d: false },
+    { t: "Verify “new struts”", h: "Controlled ride, no clunks. Clean strut bodies in wheel wells. Ask for receipt.", d: false }
+  ]},
+  { title: "7 · Body · Interior · Tires", note: "", items: [
+    { t: "Respray check", h: "Overspray in jambs/hood edges, tape lines, uneven panel gaps = accident repair. Sight down white panels in sun.", d: false },
+    { t: "AZ sun damage", h: "Clear coat peel on roof/hood/tailgate, dash cracks, headliner sag.", d: false },
+    { t: "Tires: date + wear", h: "DOT date >5–6 yrs = replace regardless of tread. All 4 matching. Inner-edge wear = alignment issue. Verify “almost new.”", d: false },
+    { t: "VIN plates match", h: "Dash, driver door jamb, and title all agree: 5J6RM4H70EL070263.", d: false },
+    { t: "Electronics sweep", h: "Every window, door lock (actuators fail on these), sunroof, seat heaters, camera, nav.", d: false }
+  ]},
+  { title: "8 · Flat-Tow Specific", note: "The reason you're buying it", items: [
+    { t: "Ignition ACC position", h: "Key lives in ACC while towing — must turn smoothly, no worn lock cylinder.", d: false },
+    { t: "Shifter cycles freely", h: "Brake pressed: P→D→N without binding — the tow procedure requires this every hookup.", d: false },
+    { t: "Behind front bumper / frame rails", h: "Clean metal (good, baseplate installs ~$500+labor) OR existing Blue Ox/Roadmaster baseplate (verify solid). Front collision repair here = problem.", d: true },
+    { t: "Parking brake releases fully", h: "A dragging park brake destroys rear brakes while towing.", d: false }
+  ]},
+  { title: "9 · Paperwork & Close", note: "", items: [
+    { t: "Title in hand, no lien", h: "Dealer must have title ready to transfer (or lien-release). No “we'll mail it.”", d: true },
+    { t: "“3-month warranty” in writing", h: "Who backs it? 50/50 powertrain-only third-party warranties are near-worthless — price the car as if it doesn't exist.", d: false },
+    { t: "Condition sale on PPI", h: "$150–200 at Honda dealer or indy shop, on a lift. Refusal tells you everything.", d: true },
+    { t: "Negotiate out-the-door", h: "Clean Carfax removes the history discount — leverage is inspection findings + 140k service due (diff fluid, ATF, plugs, valve check ≈ $600–900). AZ doc fees are uncapped — negotiate the OTD number. Open at $9,500; clean pass = $10,000–10,500 fair.", d: false }
+  ]}
+];
+
+let state = {};
+let storageOK = false;
+try {
+  const k = "__t"; localStorage.setItem(k, "1"); localStorage.removeItem(k);
+  storageOK = true;
+  state = JSON.parse(localStorage.getItem("crvChecklist_v3") || "{}");
+} catch (e) { state = {}; }
+if (!("0-0" in state)) { state["0-0"] = true; } // recalls verified clean Aug 2026
+
+function save() {
+  if (!storageOK) return;
+  try { localStorage.setItem("crvChecklist_v3", JSON.stringify(state)); } catch (e) {}
+}
+
+const phasesEl = document.getElementById("phases");
+
+DATA.forEach((phase, pi) => {
+  const pd = document.createElement("div");
+  pd.className = "phase" + (pi === 0 ? " open" : "");
+  pd.id = "phase-" + pi;
+
+  const head = document.createElement("div");
+  head.className = "phase-header";
+  head.innerHTML = '<div class="phase-title">' + phase.title +
+    (phase.note ? '<span class="phase-note">' + phase.note + "</span>" : "") +
+    '</div><span class="badge" id="badge-' + pi + '"></span><span class="chev">▶</span>';
+  head.onclick = () => pd.classList.toggle("open");
+  pd.appendChild(head);
+
+  const list = document.createElement("div");
+  list.className = "items";
+  phase.items.forEach((item, ii) => {
+    const key = pi + "-" + ii;
+    const el = document.createElement("div");
+    el.className = "item" + (item.d ? " dealbreaker" : "") + (state[key] ? " checked" : "");
+    el.innerHTML = '<div class="cb"></div><div class="item-text"><div class="item-title">' +
+      (item.d ? '<span class="flag">⛔ </span>' : "") + item.t +
+      '</div><div class="item-how">' + item.h + "</div></div>";
+    el.onclick = () => {
+      state[key] = !state[key];
+      el.classList.toggle("checked", state[key]);
+      save();
+      refresh();
+    };
+    list.appendChild(el);
+  });
+  pd.appendChild(list);
+  phasesEl.appendChild(pd);
+});
+
+function refresh() {
+  let total = 0, done = 0;
+  DATA.forEach((phase, pi) => {
+    let pDone = 0;
+    phase.items.forEach((_, ii) => {
+      total++;
+      if (state[pi + "-" + ii]) { done++; pDone++; }
+    });
+    const badge = document.getElementById("badge-" + pi);
+    badge.textContent = pDone + "/" + phase.items.length;
+    badge.classList.toggle("complete", pDone === phase.items.length);
+  });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById("progressBar").style.width = pct + "%";
+  document.getElementById("progressLabel").textContent = done + " of " + total + " checked";
+  document.getElementById("footerStat").textContent = pct + "% complete";
+}
+
+function resetAll() {
+  if (!confirm("Clear all checkmarks?")) return;
+  state = {};
+  state["0-0"] = true; // keep recall verification
+  save();
+  document.querySelectorAll(".item").forEach(el => el.classList.remove("checked"));
+  document.querySelectorAll(".item")[0].classList.add("checked");
+  refresh();
+}
+
+refresh();
+</script>
+
+
+</body></html>
